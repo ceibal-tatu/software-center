@@ -1,0 +1,12 @@
+=== modified file 'softwarecenter/ui/gtk3/views/appdetailsview.py'
+--- a/softwarecenter/ui/gtk3/views/appdetailsview.py	2014-01-10 10:50:59 +0000
++++ b/softwarecenter/ui/gtk3/views/appdetailsview.py	2014-03-27 01:21:19 +0000
+@@ -177,6 +177,7 @@
+         self.progress = Gtk.ProgressBar()
+ 
+         self.pkg_state = None
++        self.app_details = None
+ 
+         self.hbox.pack_start(self.installed_icon, False, False, 0)
+         self.hbox.pack_start(self.label, False, False, 0)
+

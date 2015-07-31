@@ -1,0 +1,14 @@
+=== modified file 'softwarecenter/ui/gtk3/app.py'
+--- a/softwarecenter/ui/gtk3/app.py	2013-07-24 15:01:22 +0000
++++ b/softwarecenter/ui/gtk3/app.py	2014-04-17 13:40:15 +0000
+@@ -998,6 +998,9 @@
+             self.active_pane.app_details_view.desc.copy_clipboard()
+ 
+     def on_menuitem_paste_activate(self, menuitem):
++        # LP: #1308354
++        if self.active_pane.searchentry.get_property("visible") == False:
++            return
+         self.active_pane.searchentry.paste_clipboard()
+ 
+     def on_menuitem_delete_activate(self, menuitem):
+

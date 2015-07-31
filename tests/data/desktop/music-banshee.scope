@@ -1,0 +1,17 @@
+[Scope]
+DBusName=com.canonical.Unity.Scope.Music
+DBusPath=/com/canonical/unity/scope/banshee
+Icon=/usr/share/unity/6/lens-nav-music.svg
+Name=Music (Banshee)
+Description=Find artists, albums, and your favorite tracks
+SearchHint=Search Music Collection
+Shortcut=m
+Type=music
+
+[Desktop Entry]
+X-AppInstall-Package=unity-lens-music
+X-AppInstall-Popcon=1000
+X-AppInstallSection=main
+
+X-Ubuntu-Gettext-Domain=unity-lens-music
+

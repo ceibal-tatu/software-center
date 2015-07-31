@@ -1,0 +1,107 @@
+=== modified file 'setup.py'
+--- old/setup.py	2013-09-11 18:04:00 +0000
++++ new/setup.py	2013-11-25 21:58:02 +0000
+@@ -47,13 +47,6 @@ CODENAME = '%s'
+ DISTRO = '%s'
+ RELEASE = '%s'
+ """ % (VERSION, codename, distro, release))
+-    # double check that we have the latest distro series and fail if not
+-    if distro == "Ubuntu":
+-        import softwarecenter.distro.ubuntu
+-        if not codename in softwarecenter.distro.ubuntu.Ubuntu.DISTROSERIES:
+-            raise ValueError("Could not find '%s' in ubuntu distro class "
+-                             "please add it to DISTROSERIES", codename)
+-
+ 
+ # update po4a
+ if sys.argv[1] == "build":
+
+=== modified file 'softwarecenter/distro/__init__.py'
+--- old/softwarecenter/distro/__init__.py	2013-08-21 14:23:53 +0000
++++ new/softwarecenter/distro/__init__.py	2013-11-25 21:58:02 +0000
+@@ -31,11 +31,6 @@ LOG = logging.getLogger(__name__)
+ class Distro(object):
+     """ abstract base class for a distribution """
+ 
+-    # list of code names for the distro from newest to oldest, this is
+-    # used e.g. in the reviews loader if no reviews for the current codename
+-    # are found
+-    DISTROSERIES = []
+-
+     # base path for the review summary, the JS will append %i.png
+     # (with i={1,5})
+     REVIEW_SUMMARY_STARS_BASE_PATH = \
+
+=== modified file 'softwarecenter/distro/fedora.py'
+--- old/softwarecenter/distro/fedora.py	2013-08-21 14:23:53 +0000
++++ new/softwarecenter/distro/fedora.py	2013-11-25 21:58:02 +0000
+@@ -24,15 +24,6 @@ from gettext import gettext as _
+ 
+ 
+ class Fedora(Distro):
+-    DISTROSERIES = [
+-        'Beefy Miracle',
+-        'Verne',
+-        'Lovelock',
+-        'Laughlin',
+-        'Leonidas',
+-        'Constantine',
+-    ]
+-
+     # disable paid software
+     PURCHASE_APP_URL = None
+ 
+
+=== modified file 'softwarecenter/distro/suselinux.py'
+--- old/softwarecenter/distro/suselinux.py	2012-11-28 16:58:59 +0000
++++ new/softwarecenter/distro/suselinux.py	2013-11-25 21:58:02 +0000
+@@ -22,9 +22,6 @@ from softwarecenter.distro import Distro
+ 
+ 
+ class Suselinux(Distro):
+-    # see __init__.py description
+-    DISTROSERIES = ["11.4",
+-                    ]
+ 
+     # screenshot handling
+     SCREENSHOT_THUMB_URL = ("http://screenshots.ubuntu.com/"
+
+=== modified file 'softwarecenter/distro/ubuntu.py'
+--- old/softwarecenter/distro/ubuntu.py	2013-08-21 14:23:53 +0000
++++ new/softwarecenter/distro/ubuntu.py	2013-11-25 21:58:02 +0000
+@@ -33,16 +33,6 @@ LOG = logging.getLogger(__name__)
+ 
+ class Ubuntu(Debian):
+ 
+-    # see __init__.py description
+-    DISTROSERIES = [
+-        "saucy",
+-        "raring",
+-        "quantal",
+-        "precise",
+-        "oneiric",
+-        "natty",
+-    ]
+-
+     # metapackages
+     IMPORTANT_METAPACKAGES = (
+         "ubuntu-standard",
+
+=== modified file 'utils/piston-helpers/piston_get_reviews_helper.py'
+--- old/utils/piston-helpers/piston_get_reviews_helper.py	2011-10-13 13:39:21 +0000
++++ new/utils/piston-helpers/piston_get_reviews_helper.py	2013-11-25 21:58:02 +0000
+@@ -22,13 +22,6 @@ def try_get_reviews(kwargs):
+     """
+     piston_reviews = rnrclient.get_reviews(**kwargs)
+ 
+-    # test if we don't have reviews for the current distroseries
+-    # and fallback to the previous oneif that is the case
+-    if (piston_reviews == [] and
+-        kwargs["distroseries"] == distro.DISTROSERIES[0]):
+-        kwargs["distroseries"] = distro.DISTROSERIES[1]
+-        piston_reviews = rnrclient.get_reviews(**kwargs)
+-
+     # the backend sometimes returns None so we fix this here
+     if piston_reviews is None:
+         piston_reviews = []
+

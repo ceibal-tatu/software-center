@@ -1,0 +1,39 @@
+<Menu>
+
+  <!-- The unity people like to have categories with stable non-utf8
+       names, this menu provides them.
+  -->        
+
+  <!-- Keep in sync with whats-new.menu.in and top-rated.menu.in  -->
+  <Menu>
+    <Name>unity-whats-new</Name>
+    <Flags>
+      <Flag>available-only</Flag>
+      <Flag>carousel-only</Flag>
+      <Flag>not-installed-only</Flag>
+    </Flags>
+    <SCSortMode>3</SCSortMode>
+    <SCItemLimit>20</SCItemLimit>
+    <Include>
+      <And>
+        <SCType>Application</SCType>
+      </And>
+    </Include>
+  </Menu>
+
+  <Menu>
+    <Name>unity-top-rated</Name>
+    <Flags>
+      <Flag>available-only</Flag>
+      <Flag>carousel-only</Flag>
+    </Flags>
+    <SCSortMode>4</SCSortMode>
+    <SCItemLimit>100</SCItemLimit>
+    <Include>
+      <And>
+        <SCType>Application</SCType>
+      </And>
+    </Include>
+  </Menu>
+
+</Menu>

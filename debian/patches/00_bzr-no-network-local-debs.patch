@@ -1,0 +1,41 @@
+=== modified file 'softwarecenter/ui/gtk3/views/appdetailsview.py'
+--- old/softwarecenter/ui/gtk3/views/appdetailsview.py	2012-12-17 09:53:32 +0000
++++ new/softwarecenter/ui/gtk3/views/appdetailsview.py	2013-10-08 15:13:59 +0000
+@@ -35,7 +35,10 @@ from softwarecenter.cmdfinder import Cmd
+ from softwarecenter.netstatus import (NetState, get_network_watcher,
+                                       network_state_is_connected)
+ from softwarecenter.db.application import Application
+-from softwarecenter.db import DebFileApplication
++from softwarecenter.db.debfile import (
++    DebFileApplication,
++    AppDetailsDebFile,
++    )
+ from softwarecenter.backend.reviews import ReviewStats
+ from softwarecenter.enums import (AppActions,
+                                   PkgStates,
+@@ -452,7 +455,14 @@ class PackageStatusBar(StatusBar):
+                           AppActions.APPLY)):
+             self.set_label(self.app_details.warning)
+ 
+-        sensitive = network_state_is_connected()
++        connected = network_state_is_connected()
++        self.set_network_is_connected(connected)
++
++    def set_network_is_connected(self, have_network):
++        sensitive = have_network
++        # debs can always be installed(?)
++        if isinstance(self.app_details, AppDetailsDebFile):
++            sensitive = True
+         self.button.set_sensitive(sensitive)
+ 
+     def _convert_purchase_date_str_to_datetime(self, purchase_date):
+@@ -911,7 +921,7 @@ class AppDetailsView(Viewport):
+ 
+         # set addon table and action button states based on sensitivity
+         sensitive = state in NetState.NM_STATE_CONNECTED_LIST
+-        self.pkg_statusbar.button.set_sensitive(sensitive)
++        self.pkg_statusbar.set_network_is_connected(sensitive)
+         self.addon_view.addons_set_sensitive(sensitive)
+         self.addons_statusbar.button_apply.set_sensitive(sensitive)
+         self.addons_statusbar.button_cancel.set_sensitive(sensitive)
+

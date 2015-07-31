@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+share:=usr/share/software-center
+
+%:
+	dh $@ --with=python2,scour
+
+# Install the modules in a private directory, as our applications are the
+# only ones using them.
+override_dh_auto_install:
+	dh_auto_install -- --install-lib /usr/share/software-center
+	rm -r debian/software-center/usr/share/software-center/*.egg-info
+	# Move the scripts to $(SHARE) and relink them again later.
+	mv debian/software-center/usr/*bin/* debian/software-center/$(share)
+	rmdir debian/software-center/usr/*bin
+
+
+override_dh_install:
+	dh_install --fail-missing
+	dh_installmime -i
+	dh_link $(share)/software-center usr/bin/software-center \
+	        $(share)/update-software-center usr/sbin/update-software-center
+
+	# Remove empty directories.
+	find debian/*/usr -type d -empty -delete
+
+.PHONY: override_dh_auto_install

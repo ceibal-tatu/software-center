@@ -1,0 +1,26 @@
+= Background =
+
+The testsuite is automatically run on the any a server that is
+responsible for running the DEP8 enabled testsuites for the
+debian packages.
+
+== Running locally ==
+
+To test locally in a local VM:
+
+Build a VM that the tests can be run inside:
+$ bzr co lp:auto-package-testing
+$ cd auto-package-testing/bin
+$ ./prepare-testbed -r quantal i386
+[downloads 200mb data and takes a long time to finish]
+$ ./run-adt-test software-center
+
+Login into the VM once and remove cloud-init to prevent
+delay on startup.
+
+Or login into the VM itself:
+$ kvm -snapshot -m 1024 /tmp/adt/disks/pristine-quantal-i386.img
+[wait a long time, login as ubuntu/ubuntu]
+$ bzr co lp:software-center
+# adt-run --built-tree=. --- adt-virt-null
+

@@ -1,0 +1,14 @@
+=== modified file 'softwarecenter/ui/gtk3/panes/availablepane.py'
+--- old/softwarecenter/ui/gtk3/panes/availablepane.py	2013-09-10 16:26:42 +0000
++++ new/softwarecenter/ui/gtk3/panes/availablepane.py	2013-11-18 13:47:09 +0000
+@@ -437,7 +437,8 @@ class AvailablePane(SoftwarePane):
+             trans_id != PURCHASE_TRANSACTION_ID and
+                 config.add_to_unity_launcher and
+                 softwarecenter.utils.is_unity_running()):
+-            self._add_application_to_unity_launcher(details)
++            if details.desktop_file is not None:
++                self._add_application_to_unity_launcher(details)
+ 
+     def on_transaction_cancelled(self, backend, result):
+         """ handle a transaction that has been cancelled
+

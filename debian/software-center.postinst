@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+#DEBHELPER#
+
+if [ "$1" = "triggered" ] || [ "$1" = "configure" ]; then
+    # update-software-center needs python-aptdaemon to be configured
+    # but we aren't guaranteed this due to debian bug #671711
+
+    pyaptd_status=`dpkg-query -f '${Status}' -W python-aptdaemon`
+    if [ "$pyaptd_status" = "install ok installed" ]; then
+        update-software-center --triggered "$2" || true
+    fi
+    exit 0
+fi
+
+# make sure we update the index so that on first install
+# we have something to show (LP: #617397)
+if [ "$1" = "configure" ];then
+    update-apt-xapian-index -u || true
+fi

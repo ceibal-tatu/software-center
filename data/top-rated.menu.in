@@ -1,0 +1,19 @@
+<Menu>
+
+  <!-- Keep in sync with extra-unity-categories.menu.in -->
+  <Menu>
+    <_Name>Top Rated</_Name>
+    <SCIcon>gtk-about</SCIcon>
+    <Flags>
+      <Flag>available-only</Flag>
+      <Flag>carousel-only</Flag>
+    </Flags>
+    <SCSortMode>4</SCSortMode>
+    <SCItemLimit>100</SCItemLimit>
+    <Include>
+      <And>
+        <SCType>Application</SCType>
+      </And>
+    </Include>
+  </Menu>
+</Menu>

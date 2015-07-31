@@ -1,0 +1,22 @@
+=== modified file 'softwarecenter/db/pkginfo_impl/aptcache.py'
+--- a/softwarecenter/db/pkginfo_impl/aptcache.py	2012-12-18 10:23:55 +0000
++++ b/softwarecenter/db/pkginfo_impl/aptcache.py	2014-04-10 09:16:32 +0000
+@@ -588,10 +588,13 @@
+ 
+     # space calculation stuff
+     def _on_total_size_calculation_done(self, trans, space):
+-        pkgname = trans.packages[0][0]
+-        self.emit(
+-            "query-total-size-on-install-done",
+-            pkgname, trans.download, trans.space)
++        # ensure trans contains the data we expect, see LP: #1225885
++        if trans.packages and trans.packages[0]:
++            pkgname = trans.packages[0][0]
++            self.emit(
++                "query-total-size-on-install-done",
++                pkgname, trans.download, trans.space)
++            
+ 
+     def _on_trans_simulate_error(self, error):
+         LOG.exception("simulate failed")
+
