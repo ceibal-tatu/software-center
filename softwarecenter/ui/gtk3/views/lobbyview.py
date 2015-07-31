@@ -235,8 +235,8 @@ class LobbyView(CategoriesView):
         self.whats_new.remove_all()
         # get top_rated category and docs
         whats_new_cat = get_category_by_name(
-            #self.categories, u"Ceibal")  # untranslated name
-            self.categories, u"What\u2019s New")  # untranslated name
+            self.categories, u"Ceibal")  # untranslated name
+            #self.categories, u"What\u2019s New")  # untranslated name
             #self.categories, u"Top Rated")  # untranslated name
         if whats_new_cat:
             docs = whats_new_cat.get_documents(self.db)
@@ -256,6 +256,7 @@ class LobbyView(CategoriesView):
         self.whats_new_frame.add(self.whats_new)
 
         whats_new_cat = self._update_whats_new_content()
+        
         if whats_new_cat is not None:
             # only add to the visible right_frame if we actually have it
             self.right_column.pack_start(self.whats_new_frame, True, True, 0)

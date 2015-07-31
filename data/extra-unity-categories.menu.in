@@ -6,7 +6,8 @@
 
   <!-- Keep in sync with whats-new.menu.in and top-rated.menu.in  -->
   <Menu>
-    <Name>unity-whats-new</Name>
+    <!-- <Name>unity-whats-new</Name> -->
+    <Name>Ceibal</Name>
     <Flags>
       <Flag>available-only</Flag>
       <Flag>carousel-only</Flag>

@@ -2,7 +2,8 @@
 
   <!-- Keep in sync with extra-unity-categories.menu.in -->
   <Menu>
-    <_Name>What’s New</_Name>
+    <!-- <_Name>What’s New</_Name> -->
+    <_Name>Ceibal</_Name>
     <SCIcon>gtk-about</SCIcon>
     <Flags>
       <Flag>available-only</Flag>
