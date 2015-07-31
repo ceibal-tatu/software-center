@@ -235,7 +235,9 @@ class LobbyView(CategoriesView):
         self.whats_new.remove_all()
         # get top_rated category and docs
         whats_new_cat = get_category_by_name(
+            #self.categories, u"Ceibal")  # untranslated name
             self.categories, u"What\u2019s New")  # untranslated name
+            #self.categories, u"Top Rated")  # untranslated name
         if whats_new_cat:
             docs = whats_new_cat.get_documents(self.db)
             self.whats_new.add_tiles(self.properties_helper,
@@ -249,7 +251,8 @@ class LobbyView(CategoriesView):
         self.whats_new.connect("application-activated",
                                self.on_application_activated)
         self.whats_new_frame = FramedHeaderBox()
-        self.whats_new_frame.set_header_label(_(u"What\u2019s New"))
+        self.whats_new_frame.set_header_label(_(u"Ceibal"))
+        #self.whats_new_frame.set_header_label(_(u"What\u2019s New"))
         self.whats_new_frame.add(self.whats_new)
 
         whats_new_cat = self._update_whats_new_content()
