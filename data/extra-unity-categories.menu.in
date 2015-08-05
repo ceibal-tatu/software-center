@@ -6,6 +6,22 @@
 
   <!-- Keep in sync with whats-new.menu.in and top-rated.menu.in  -->
   <Menu>
+    <Name>CeibalHighlights</Name>
+    <Flags>
+      <Flag>available-only</Flag>
+      <Flag>carousel-only</Flag>
+      <Flag>not-installed-only</Flag>
+    </Flags>
+    <SCSortMode>0</SCSortMode>
+    <SCItemLimit>20</SCItemLimit>
+    <Include>
+      <And>
+        <Category>CeibalHighlights</Category>
+      </And>
+    </Include>
+  </Menu>
+  
+  <Menu>
     <Name>unity-whats-new</Name>
     <Flags>
       <Flag>available-only</Flag>

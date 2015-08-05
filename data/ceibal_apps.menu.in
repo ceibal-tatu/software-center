@@ -1,0 +1,20 @@
+<Menu>
+
+  <!-- Keep in sync with extra-unity-categories.menu.in -->
+  <Menu>
+    <_Name>CeibalHighlights</_Name>
+    <SCIcon>gtk-about</SCIcon>
+    <Flags>
+      <Flag>available-only</Flag>
+      <Flag>carousel-only</Flag>
+      <Flag>not-installed-only</Flag>
+    </Flags>
+    <SCSortMode>0</SCSortMode>
+    <SCItemLimit>20</SCItemLimit>
+    <Include>
+      <And>
+        <Category>CeibalHighlights</Category>
+      </And>
+    </Include>
+  </Menu>
+</Menu>
