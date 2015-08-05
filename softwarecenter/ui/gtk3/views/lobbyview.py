@@ -78,7 +78,6 @@ class LobbyView(CategoriesView):
 
         # build before connecting the signals to avoid race
         self.build()
-
         # ensure that on db-reopen we refresh the whats-new titles
         self.db.connect("reopen", self._on_db_reopen)
 
@@ -88,6 +87,7 @@ class LobbyView(CategoriesView):
             "refresh-review-stats-finished", self._on_refresh_review_stats)
 
     def _on_db_reopen(self, db):
+        self._update_ceibal_apps_content()
         self._update_whats_new_content()
 
     def _on_refresh_review_stats(self, reviews_loader, review_stats):
@@ -118,6 +118,7 @@ class LobbyView(CategoriesView):
         bottom_hbox_alignment.add(self.bottom_hbox)
         self.vbox.pack_start(bottom_hbox_alignment, False, False, 0)
 
+        self._append_ceibal_apps()
         self._append_whats_new()
         self._append_top_rated()
         self._append_recommended_for_you()
@@ -259,6 +260,37 @@ class LobbyView(CategoriesView):
             self.whats_new_frame.header_implements_more_button()
             self.whats_new_frame.more.connect(
                 'clicked', self.on_category_clicked, whats_new_cat)
+    
+    def _update_ceibal_apps_content(self):
+        # remove any existing children from the grid widget
+        LOG.debug("Adding Ceibal highlights pkgs to pane")
+        self.ceibal_apps.remove_all()
+        ceibal_apps_cat = get_category_by_name(self.categories, u"CeibalHighlights")  
+        if ceibal_apps_cat:
+            docs = ceibal_apps_cat.get_documents(self.db)
+            self.ceibal_apps.add_tiles(self.properties_helper,
+                                     docs,
+                                     WHATS_NEW_CAROUSEL_LIMIT)
+            self.ceibal_apps.show_all()
+        return ceibal_apps_cat
+   
+     
+    def _append_ceibal_apps(self):
+        self.ceibal_apps = TileGrid()
+        self.ceibal_apps.connect("application-activated",
+                               self.on_application_activated)
+        self.ceibal_apps_frame = FramedHeaderBox()
+        self.ceibal_apps_frame.set_header_label(_(u"Ceibal Highlights"))
+        self.ceibal_apps_frame.add(self.ceibal_apps)
+
+        ceibal_apps_cat = self._update_ceibal_apps_content()
+        if ceibal_apps_cat is not None:
+            # only add to the visible right_frame if we actually have it
+            self.right_column.pack_start(self.ceibal_apps_frame, True, True, 0)
+            self.ceibal_apps_frame.header_implements_more_button()
+            self.ceibal_apps_frame.more.connect(
+                'clicked', self.on_category_clicked, ceibal_apps_cat)
+    
 
     def _update_recommended_for_you_content(self):
         if (self.recommended_for_you_panel and
@@ -334,6 +366,7 @@ class LobbyView(CategoriesView):
         self._supported_only = supported_only
 
         self._update_top_rated_content()
+        self._update_ceibal_apps_content()
         self._update_whats_new_content()
         self._update_recommended_for_you_content()
         self._update_appcount()
