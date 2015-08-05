@@ -368,6 +368,9 @@ msgstr ""
 msgid "Software Center"
 msgstr "Centro de software"
 
+msgid "Ceibal Highlights"
+msgstr "Destacados de Ceibal" 
+
 #, python-format
 #~ msgid "%s items available"
 #~ msgstr "%s elementos disponibles"
